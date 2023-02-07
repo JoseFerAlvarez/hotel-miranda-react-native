@@ -1,20 +1,19 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Logo from "./Logo";
-import { Button } from 'react-native';
 
 export default function Topbar({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.topbar}>
                 <Logo style={styles.logo}></Logo>
-                <View>
-                    <Button title="CheckForm" onPress={() =>
-                        navigation.navigate('CheckForm')
-                    }></Button>
-                    <Button title="Info" onPress={() =>
-                        navigation.navigate('Info')
-                    }></Button>
+                <View style={styles.buttons}>
+                    <Pressable onPress={() => navigation.navigate('CheckForm')}>
+                        <Text style={styles.button}>Check In</Text>
+                    </Pressable>
+                    <Pressable onPress={() => navigation.navigate('Info')}>
+                        <Text style={styles.button}>Info</Text>
+                    </Pressable>
                 </View>
             </View>
         </View>
@@ -32,8 +31,17 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
         backgroundColor: "#FFFFFF",
-        justifyContent: 'center',
         paddingLeft: 10,
+        alignItems: "center",
         flexDirection: "row"
+    },
+    buttons: {
+        flexDirection: "row",
+        marginLeft: 15
+    },
+    button: {
+        fontSize: 16,
+        marginLeft: 10,
+        fontWeight: "600"
     }
 });

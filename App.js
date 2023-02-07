@@ -15,14 +15,23 @@ export default function App() {
         <Stack.Screen
           name='CheckForm'
           component={CheckForm}
+          options={{
+            headerShown: false,
+          }}
         />
         <Stack.Screen
           name='CheckIn'
           component={CheckIn}
+          options={{
+            headerShown: false,
+          }}
         />
         <Stack.Screen
           name='Info'
           component={Info}
+          options={{
+            headerShown: false,
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
