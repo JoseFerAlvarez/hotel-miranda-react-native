@@ -7,7 +7,7 @@ export default function Info({ navigation }) {
         <View style={styles.container}>
             <Topbar navigation={navigation}></Topbar>
             <View style={styles.data}>
-                <Text style={styles.text}>Hotel Info</Text>
+                <Text style={styles.title}>Hotel Info</Text>
                 <View>
                     <View style={styles.info}>
                         <Text style={styles.text}>Reception Phone number: +34 910 555 555</Text>
@@ -37,7 +37,13 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: "#FFFFFF"
+        color: "#FFFFFF",
+        margin: 10
+    },
+    title: {
+        fontSize: 18,
+        color: "#FFFFFF",
+        marginBottom: 30
     },
     info: {
         borderWidth: 1,
