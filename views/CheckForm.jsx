@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import Logo from '../components/Logo';
+import Topbar from '../components/Topbar';
 
-export default function CheckForm() {
+export default function CheckForm({ navigation }) {
     return (
         <View>
-            <Text>Check Form</Text>
-            <Logo></Logo>
+            <Topbar navigation={navigation}></Topbar>
+            <Text>Checkform</Text>
         </View>
     )
 }
