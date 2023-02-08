@@ -11,7 +11,7 @@ export default function CheckForm({ navigation }) {
                     <Text style={styles.text}>Booking Reference</Text>
                     <TextInput style={styles.textinput} placeholder='AAA0000' placeholderTextColor={"#686868"}></TextInput>
                 </View>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('CheckIn')}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('CheckIn', { reference: "RFC5463" })}>
                     <View>
                         <Text style={styles.buttontext}>CHECK IN</Text>
                     </View>

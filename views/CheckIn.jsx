@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Topbar from '../components/Topbar';
 
-export default function CheckIn({ navigation }) {
+export default function CheckIn({ navigation, route }) {
     return (
         <View style={styles.container}>
             <Topbar navigation={navigation}></Topbar>
@@ -24,7 +24,15 @@ export default function CheckIn({ navigation }) {
                     <View style={styles.info}>
                         <Text style={styles.text}>Total Price: €400</Text>
                     </View>
+                    <View style={styles.info}>
+                        <Text style={styles.text}>Reference: {route.params.reference}</Text>
+                    </View>
                 </View>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('CheckForm')}>
+                    <View>
+                        <Text style={styles.buttontext}>DONE</Text>
+                    </View>
+                </Pressable>
             </View>
         </View>
     )
@@ -71,4 +79,17 @@ const styles = StyleSheet.create({
         color: "#FFFFFF",
         marginBottom: 40
     },
+    button: {
+        marginTop: 30,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 100,
+        height: 40,
+        backgroundColor: "#BEAD8E",
+        width: 150
+    },
+    buttontext: {
+        color: "#FFFFFF",
+        fontWeight: "600"
+    }
 });
