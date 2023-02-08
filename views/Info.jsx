@@ -1,6 +1,11 @@
+/**React */
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+/**React native */
+import { View, Text } from 'react-native';
+/**Components */
 import Topbar from '../components/Topbar';
+/**Styles */
+import { styles } from '../styles/styles';
 
 export default function Info({ navigation }) {
     return (
@@ -29,32 +34,3 @@ export default function Info({ navigation }) {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#333333",
-        flex: 1
-    },
-    text: {
-        fontSize: 16,
-        color: "#FFFFFF",
-        margin: 10
-    },
-    title: {
-        fontSize: 18,
-        color: "#FFFFFF",
-        marginBottom: 30
-    },
-    info: {
-        borderWidth: 1,
-        borderColor: "#FFFFFF",
-        marginLeft: "5%",
-        marginRight: "5%",
-        alignItems: "center"
-    },
-    data: {
-        width: "100%",
-        alignItems: 'center',
-        marginTop: "20%"
-    }
-});

@@ -1,8 +1,14 @@
+/**React */
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
+/**React native */
+import { View, Text, TextInput, Pressable } from 'react-native';
+/**Components */
 import Topbar from '../components/Topbar';
+/**Styles */
+import { styles } from "../styles/styles.js";
 
 export default function CheckForm({ navigation }) {
+    /**State */
     const [ref, setRef] = useState("");
 
     return (
@@ -18,7 +24,7 @@ export default function CheckForm({ navigation }) {
                         value={ref}
                         onChangeText={setRef}></TextInput>
                 </View>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('CheckIn', { reference: ref })}>
+                <Pressable style={styles.buttonform} onPress={() => navigation.navigate('CheckIn', { reference: ref })}>
                     <View>
                         <Text style={styles.buttontext}>CHECK IN</Text>
                     </View>
@@ -27,41 +33,3 @@ export default function CheckForm({ navigation }) {
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#333333",
-        flex: 1,
-    },
-    form: {
-        flexDirection: "row",
-        marginTop: "30%",
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    text: {
-        color: "#FFFFFF",
-        fontSize: 14
-    },
-    textinput: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#BEAD8E",
-        width: 200,
-        paddingTop: 10,
-        color: "#FFFFFF",
-        fontSize: 16
-    },
-    button: {
-        marginTop: 10,
-        marginLeft: 20,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 100,
-        height: 40,
-        backgroundColor: "#BEAD8E"
-    },
-    buttontext: {
-        color: "#FFFFFF",
-        fontWeight: "600"
-    }
-});
