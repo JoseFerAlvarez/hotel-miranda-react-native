@@ -1,17 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
 import Topbar from '../components/Topbar';
 
 export default function CheckForm({ navigation }) {
+    const [ref, setRef] = useState("");
+
     return (
         <View style={styles.container}>
             <Topbar navigation={navigation}></Topbar>
             <View style={styles.form}>
                 <View>
                     <Text style={styles.text}>Booking Reference</Text>
-                    <TextInput style={styles.textinput} placeholder='AAA0000' placeholderTextColor={"#686868"}></TextInput>
+                    <TextInput
+                        style={styles.textinput}
+                        placeholder='AAA0000'
+                        placeholderTextColor={"#686868"}
+                        value={ref}
+                        onChangeText={setRef}></TextInput>
                 </View>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('CheckIn', { reference: "RFC5463" })}>
+                <Pressable style={styles.button} onPress={() => navigation.navigate('CheckIn', { reference: ref })}>
                     <View>
                         <Text style={styles.buttontext}>CHECK IN</Text>
                     </View>

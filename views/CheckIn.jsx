@@ -1,41 +1,81 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Topbar from '../components/Topbar';
 
 export default function CheckIn({ navigation, route }) {
-    return (
-        <View style={styles.container}>
-            <Topbar navigation={navigation}></Topbar>
-            <View style={styles.checkin}>
-                <Text style={styles.title}>Thank you, you have successfully checked in</Text>
-                <View>
-                    <View style={styles.info2}>
-                        <Text style={styles.text2}>Booking DETAILS</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.text}>Checkin Date: 12/04/22</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.text}>CheckOut Date: 16/04/22</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.text}>Number of Guests: 2</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.text}>Total Price: €400</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.text}>Reference: {route.params.reference}</Text>
-                    </View>
-                </View>
-                <Pressable style={styles.button} onPress={() => navigation.navigate('CheckForm')}>
+
+    const [booking, setBooking] = useState(null);
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYzZDkyNDBhNjg2MmZkYjQ3NzgzNzIwMSIsImVtYWlsIjoiam9zZWZlcmFsdmFyZXpyb21lcm9AZ21haWwuY29tIn0sImlhdCI6MTY3NTE4MDIwMn0.dY3N6SOv6HB2H0Pjnz1BCuMTVnbSjg98f2pflTtaCaE";
+
+    useEffect(async () => {
+        if (route.params.reference) {
+            setBooking(await getBooking());
+        };
+    }, []);
+
+    const getBooking = async () => {
+        const response = await fetch(`http://localhost:3001/bookings/search/${route.params.reference}`, {
+            method: 'POST',
+            mode: "cors",
+            cache: "default",
+            credentials: "same-origin",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            redirect: "follow",
+            referrerPolicy: "no-referrer",
+            body: null
+        })
+
+        const json = await response.json();
+        return json.booking;
+    }
+
+    if (booking) {
+        return (
+            <View style={styles.container}>
+                <Topbar navigation={navigation}></Topbar>
+                <View style={styles.checkin}>
+                    <Text style={styles.title}>Thank you, you have successfully checked in</Text>
                     <View>
-                        <Text style={styles.buttontext}>DONE</Text>
+                        <View style={styles.info2}>
+                            <Text style={styles.text2}>Booking DETAILS</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.text}>Checkin Date: {booking.checkin}</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.text}>CheckOut Date: {booking.checkout}</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.text}>Number of Guests: 2</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.text}>Total Price: €400</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.text}>Reference: {route.params.reference}</Text>
+                        </View>
                     </View>
-                </Pressable>
+                    <Pressable style={styles.button} onPress={() => navigation.navigate('CheckForm')}>
+                        <View>
+                            <Text style={styles.buttontext}>DONE</Text>
+                        </View>
+                    </Pressable>
+                </View>
             </View>
-        </View>
-    )
+        )
+    } else {
+        return (
+            <View style={styles.container}>
+                <Topbar navigation={navigation}></Topbar>
+                <View style={styles.checkin}>
+                    <Text style={styles.title}>Booking not found</Text>
+                </View>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
