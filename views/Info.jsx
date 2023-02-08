@@ -49,7 +49,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: "#FFFFFF",
         marginLeft: "5%",
-        marginRight: "5%"
+        marginRight: "5%",
+        alignItems: "center"
     },
     data: {
         width: "100%",
