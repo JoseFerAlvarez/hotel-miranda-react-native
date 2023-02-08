@@ -5,11 +5,16 @@ import Topbar from '../components/Topbar';
 export default function CheckIn({ navigation, route }) {
 
     const [booking, setBooking] = useState(null);
+    const [message, setMessage] = useState("");
     const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7Il9pZCI6IjYzZDkyNDBhNjg2MmZkYjQ3NzgzNzIwMSIsImVtYWlsIjoiam9zZWZlcmFsdmFyZXpyb21lcm9AZ21haWwuY29tIn0sImlhdCI6MTY3NTE4MDIwMn0.dY3N6SOv6HB2H0Pjnz1BCuMTVnbSjg98f2pflTtaCaE";
 
     useEffect(async () => {
         if (route.params.reference) {
-            setBooking(await getBooking());
+            const res = await getBooking();
+            setBooking(res.booking);
+            setMessage(res.message);
+
+            console.log(message);
         };
     }, []);
 
@@ -29,7 +34,25 @@ export default function CheckIn({ navigation, route }) {
         })
 
         const json = await response.json();
-        return json.booking;
+        return json;
+    }
+
+    const formatDate = (date) => {
+        const newDate = new Date(date);
+        const month = newDate.getMonth() + 1;
+        const day = newDate.getDate();
+        const year = newDate.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    }
+
+    const getBookingPrice = (checkin, checkout) => {
+        const time = ((new Date(checkout).getTime() - new Date(checkin).getTime()) / (1000 * 60 * 60 * 24)).toFixed(0);
+        return ((time * booking.price) / 100).toFixed(2);
+    }
+
+    const getDays = (checkin, checkout) => {
+        return ((new Date(checkout).getTime() - new Date(checkin).getTime()) / (1000 * 60 * 60 * 24)).toFixed(0);
     }
 
     if (booking) {
@@ -37,22 +60,22 @@ export default function CheckIn({ navigation, route }) {
             <View style={styles.container}>
                 <Topbar navigation={navigation}></Topbar>
                 <View style={styles.checkin}>
-                    <Text style={styles.title}>Thank you, you have successfully checked in</Text>
+                    <Text style={styles.title}>{message}</Text>
                     <View>
                         <View style={styles.info2}>
                             <Text style={styles.text2}>Booking DETAILS</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.text}>Checkin Date: {booking.checkin}</Text>
+                            <Text style={styles.text}>Check In Date: {formatDate(booking.checkin)}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.text}>CheckOut Date: {booking.checkout}</Text>
+                            <Text style={styles.text}>Check Out Date: {formatDate(booking.checkout)}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.text}>Number of Guests: 2</Text>
+                            <Text style={styles.text}>Days: {getDays(booking.checkin, booking.checkout)}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.text}>Total Price: €400</Text>
+                            <Text style={styles.text}>Total Price: €{getBookingPrice(booking.checkin, booking.checkout)}</Text>
                         </View>
                         <View style={styles.info}>
                             <Text style={styles.text}>Reference: {route.params.reference}</Text>
